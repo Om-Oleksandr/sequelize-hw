@@ -1,0 +1,24 @@
+services:
+  back:
+    build:
+      context: ./
+    ports:
+      - 3005:3000
+    environment:
+      PORT: 3000
+    networks:
+      - mynetwork
+    volumes:
+      - ./:/server:ro
+    depends_on:
+      - fd_postgresql
+  fd_postgresql:
+    image: postgres:15.3-alpine3.18
+    networks:
+      - mynetwork
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+      POSTGRES_DB: fd_postgres
+networks:
+  mynetwork:
